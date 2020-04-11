@@ -1,2 +1,2 @@
-docker build -t api:latest .
-docker run -t api:latest
+docker build --pull --no-cache -t api:latest .
+docker run -p 8080:8080 -t api:latest
