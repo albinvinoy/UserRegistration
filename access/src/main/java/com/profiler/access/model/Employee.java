@@ -9,5 +9,6 @@ import org.springframework.data.annotation.Id;
 public class Employee {
 	private String firstName;
 	private String lastName;
+	private String phoneNumber;
 
 }
