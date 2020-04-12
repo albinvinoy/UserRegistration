@@ -1,18 +1,26 @@
 version: '3'
 # https://dev-pages.info/how-to-run-spring-boot-and-mongodb-in-docker-using-docker-compose/
-services: 
-    springboot:
-        build: api/
-        restart: always
-        container_name: springboot
-        ports: 
+services:
+    api:
+        container_name: api
+        build:
+            context: api
+            dockerfile: Dockerfile
+        working_dir: api
+        ports:
             - 8080:8080
-        depends_on: 
-            - mongo
-    mongo:
-        image: mongo
-        container_name: api-mongo
-        volumes: 
-            - $HOME/data/db:/data/db
-            - $HOME/data/bkp:/data/bkp
-        restart: always
+        depends_on:
+            - mongodb
+        links:
+            - mongodb
+
+    mongodb:
+        container_name: mongodb
+        image: mongo:4.2
+        environment:
+            MONGO_INITDB_DATABASE: users
+        ports:
+          - 27017:27017
+        volumes:
+            - $HOME/data/springboot-mongo-data:/data/db
+            - $HOME/data/springboot-mongo-bkp:/data/bkp
